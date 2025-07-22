@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronDown, ChevronRight, Code, BookOpen, Zap } from 'lucide-react';
+import { ChevronDown, ChevronRight, Code, BookOpen, Zap, Sparkles, Play } from 'lucide-react';
 import { languageFeatures, kangExamples } from '../../data/kangExamples';
 
 interface LanguageGuideProps {
@@ -29,82 +29,236 @@ const LanguageGuide: React.FC<LanguageGuideProps> = ({ onExampleSelect }) => {
   }, {} as Record<string, typeof kangExamples>);
 
   return (
-    <div className="bg-white rounded-lg shadow-lg h-full flex flex-col">
+    <div className="glass-card slide-in-left" style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
       {/* Header */}
-      <div className="p-4 border-b border-gray-200">
-        <h2 className="text-lg font-bold text-gray-800 flex items-center space-x-2">
-          <Code size={20} className="text-purple-600" />
-          <span>KANG Language</span>
-        </h2>
-        <p className="text-sm text-gray-600 mt-1">Syntax guide and examples</p>
+      <div style={{ 
+        padding: '20px',
+        borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px' }}>
+          <div style={{
+            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            padding: '10px',
+            borderRadius: '12px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}>
+            <Code size={20} color="white" />
+          </div>
+          <div>
+            <h2 className="gradient-text" style={{ 
+              fontSize: '20px', 
+              fontWeight: '700',
+              marginBottom: '2px'
+            }}>
+              KANG Guide
+            </h2>
+            <p style={{ 
+              fontSize: '13px', 
+              color: 'rgba(255, 255, 255, 0.6)',
+              fontWeight: '500'
+            }}>
+              Syntax & Examples
+            </p>
+          </div>
+        </div>
       </div>
 
       {/* Tabs */}
-      <div className="flex border-b border-gray-200">
+      <div style={{ 
+        display: 'flex',
+        borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+        background: 'rgba(255, 255, 255, 0.02)'
+      }}>
         <button
           onClick={() => setActiveTab('features')}
-          className={`flex-1 px-4 py-3 text-sm font-medium transition-colors duration-200 ${
-            activeTab === 'features'
-              ? 'text-purple-600 border-b-2 border-purple-600 bg-purple-50'
-              : 'text-gray-600 hover:text-gray-800'
-          }`}
+          style={{
+            flex: 1,
+            padding: '16px 20px',
+            fontSize: '14px',
+            fontWeight: '600',
+            background: activeTab === 'features' ? 'linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%)' : 'transparent',
+            color: activeTab === 'features' ? 'white' : 'rgba(255, 255, 255, 0.7)',
+            border: 'none',
+            cursor: 'pointer',
+            transition: 'all 0.3s ease',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '8px',
+            borderBottom: activeTab === 'features' ? '2px solid #667eea' : '2px solid transparent'
+          }}
         >
-          <BookOpen size={16} className="inline mr-2" />
-          Features
+          <BookOpen size={16} />
+          <span>Features</span>
         </button>
         <button
           onClick={() => setActiveTab('examples')}
-          className={`flex-1 px-4 py-3 text-sm font-medium transition-colors duration-200 ${
-            activeTab === 'examples'
-              ? 'text-purple-600 border-b-2 border-purple-600 bg-purple-50'
-              : 'text-gray-600 hover:text-gray-800'
-          }`}
+          style={{
+            flex: 1,
+            padding: '16px 20px',
+            fontSize: '14px',
+            fontWeight: '600',
+            background: activeTab === 'examples' ? 'linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%)' : 'transparent',
+            color: activeTab === 'examples' ? 'white' : 'rgba(255, 255, 255, 0.7)',
+            border: 'none',
+            cursor: 'pointer',
+            transition: 'all 0.3s ease',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '8px',
+            borderBottom: activeTab === 'examples' ? '2px solid #667eea' : '2px solid transparent'
+          }}
         >
-          <Zap size={16} className="inline mr-2" />
-          Examples
+          <Zap size={16} />
+          <span>Examples</span>
         </button>
       </div>
 
       {/* Content */}
-      <div className="flex-1 overflow-y-auto p-4">
+      <div className="scrollbar-custom" style={{ 
+        flex: 1, 
+        overflowY: 'auto', 
+        padding: '20px'
+      }}>
         {activeTab === 'features' ? (
-          <div className="space-y-3">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             {languageFeatures.map((feature) => {
               const isExpanded = expandedSections.has(feature.id);
               return (
-                <div key={feature.id} className="border border-gray-200 rounded-lg">
+                <div 
+                  key={feature.id} 
+                  className="hover-lift"
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    borderRadius: '16px',
+                    overflow: 'hidden',
+                    transition: 'all 0.3s ease'
+                  }}
+                >
                   <button
                     onClick={() => toggleSection(feature.id)}
-                    className="w-full px-4 py-3 text-left flex items-center justify-between hover:bg-gray-50 transition-colors duration-200"
+                    style={{
+                      width: '100%',
+                      padding: '16px 20px',
+                      textAlign: 'left',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      background: 'transparent',
+                      border: 'none',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease',
+                      color: 'white'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = 'transparent';
+                    }}
                   >
                     <div>
-                      <h3 className="font-semibold text-gray-800">{feature.title}</h3>
-                      <p className="text-sm text-gray-600">{feature.description}</p>
+                      <h3 style={{ 
+                        fontWeight: '600', 
+                        fontSize: '16px',
+                        marginBottom: '4px'
+                      }}>
+                        {feature.title}
+                      </h3>
+                      <p style={{ 
+                        fontSize: '13px', 
+                        color: 'rgba(255, 255, 255, 0.7)',
+                        lineHeight: '1.4'
+                      }}>
+                        {feature.description}
+                      </p>
                     </div>
-                    {isExpanded ? (
-                      <ChevronDown size={16} className="text-gray-400" />
-                    ) : (
-                      <ChevronRight size={16} className="text-gray-400" />
-                    )}
+                    <div style={{
+                      padding: '8px',
+                      borderRadius: '8px',
+                      background: 'rgba(255, 255, 255, 0.1)',
+                      transition: 'all 0.3s ease'
+                    }}>
+                      {isExpanded ? (
+                        <ChevronDown size={16} color="rgba(255, 255, 255, 0.7)" />
+                      ) : (
+                        <ChevronRight size={16} color="rgba(255, 255, 255, 0.7)" />
+                      )}
+                    </div>
                   </button>
                   
                   {isExpanded && (
-                    <div className="px-4 pb-4 border-t border-gray-100">
-                      <div className="mt-3">
-                        <h4 className="text-sm font-medium text-gray-700 mb-2">Syntax:</h4>
-                        <code className="block bg-gray-100 p-2 rounded text-sm font-mono text-purple-600">
+                    <div style={{ 
+                      padding: '0 20px 20px 20px',
+                      borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+                      background: 'rgba(0, 0, 0, 0.2)'
+                    }}>
+                      <div style={{ marginTop: '16px' }}>
+                        <h4 style={{ 
+                          fontSize: '13px', 
+                          fontWeight: '600', 
+                          color: 'rgba(255, 255, 255, 0.8)',
+                          marginBottom: '8px',
+                          textTransform: 'uppercase',
+                          letterSpacing: '0.5px'
+                        }}>
+                          Syntax:
+                        </h4>
+                        <div style={{
+                          background: 'rgba(0, 0, 0, 0.4)',
+                          padding: '12px 16px',
+                          borderRadius: '10px',
+                          border: '1px solid rgba(102, 126, 234, 0.3)',
+                          fontFamily: 'JetBrains Mono, monospace',
+                          fontSize: '13px',
+                          color: '#667eea',
+                          fontWeight: '500'
+                        }}>
                           {feature.syntax}
-                        </code>
+                        </div>
                       </div>
                       
-                      <div className="mt-3">
-                        <h4 className="text-sm font-medium text-gray-700 mb-2">Examples:</h4>
-                        <div className="space-y-1">
+                      <div style={{ marginTop: '16px' }}>
+                        <h4 style={{ 
+                          fontSize: '13px', 
+                          fontWeight: '600', 
+                          color: 'rgba(255, 255, 255, 0.8)',
+                          marginBottom: '12px',
+                          textTransform: 'uppercase',
+                          letterSpacing: '0.5px'
+                        }}>
+                          Examples:
+                        </h4>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                           {feature.examples.map((example, index) => (
                             <button
                               key={index}
                               onClick={() => onExampleSelect(example)}
-                              className="block w-full text-left bg-gray-50 hover:bg-gray-100 p-2 rounded text-sm font-mono text-gray-700 transition-colors duration-200"
+                              style={{
+                                width: '100%',
+                                textAlign: 'left',
+                                background: 'rgba(255, 255, 255, 0.05)',
+                                border: '1px solid rgba(255, 255, 255, 0.1)',
+                                padding: '10px 12px',
+                                borderRadius: '8px',
+                                fontFamily: 'JetBrains Mono, monospace',
+                                fontSize: '12px',
+                                color: 'rgba(255, 255, 255, 0.9)',
+                                cursor: 'pointer',
+                                transition: 'all 0.3s ease'
+                              }}
+                              onMouseEnter={(e) => {
+                                e.currentTarget.style.background = 'rgba(102, 126, 234, 0.1)';
+                                e.currentTarget.style.borderColor = 'rgba(102, 126, 234, 0.3)';
+                              }}
+                              onMouseLeave={(e) => {
+                                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+                                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                              }}
                             >
                               {example}
                             </button>
@@ -118,26 +272,103 @@ const LanguageGuide: React.FC<LanguageGuideProps> = ({ onExampleSelect }) => {
             })}
           </div>
         ) : (
-          <div className="space-y-4">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             {Object.entries(groupedExamples).map(([category, examples]) => (
-              <div key={category} className="border border-gray-200 rounded-lg">
-                <div className="bg-gray-50 px-4 py-2 border-b border-gray-200">
-                  <h3 className="font-semibold text-gray-800 capitalize">{category}</h3>
+              <div 
+                key={category}
+                className="hover-lift"
+                style={{
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  borderRadius: '16px',
+                  overflow: 'hidden'
+                }}
+              >
+                <div style={{
+                  background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%)',
+                  padding: '16px 20px',
+                  borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
+                }}>
+                  <h3 style={{ 
+                    fontWeight: '700', 
+                    fontSize: '16px',
+                    textTransform: 'capitalize',
+                    color: 'white',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px'
+                  }}>
+                    <Sparkles size={16} />
+                    {category}
+                  </h3>
                 </div>
-                <div className="p-4 space-y-3">
+                <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
                   {examples.map((example, index) => (
-                    <div key={index} className="border border-gray-100 rounded-lg p-3 hover:bg-gray-50 transition-colors duration-200">
-                      <div className="flex items-center justify-between mb-2">
-                        <h4 className="font-medium text-gray-800">{example.title}</h4>
+                    <div 
+                      key={index} 
+                      style={{
+                        background: 'rgba(255, 255, 255, 0.03)',
+                        border: '1px solid rgba(255, 255, 255, 0.1)',
+                        borderRadius: '12px',
+                        padding: '16px',
+                        transition: 'all 0.3s ease'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
+                        e.currentTarget.style.transform = 'translateY(-2px)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.03)';
+                        e.currentTarget.style.transform = 'translateY(0)';
+                      }}
+                    >
+                      <div style={{ 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        justifyContent: 'space-between', 
+                        marginBottom: '12px' 
+                      }}>
+                        <h4 style={{ 
+                          fontWeight: '600', 
+                          fontSize: '15px',
+                          color: 'white'
+                        }}>
+                          {example.title}
+                        </h4>
                         <button
                           onClick={() => onExampleSelect(example.code)}
-                          className="text-xs bg-purple-600 text-white px-2 py-1 rounded hover:bg-purple-700 transition-colors duration-200"
+                          className="btn-primary"
+                          style={{
+                            fontSize: '12px',
+                            padding: '6px 12px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '6px'
+                          }}
                         >
+                          <Play size={12} />
                           Load
                         </button>
                       </div>
-                      <p className="text-sm text-gray-600 mb-2">{example.description}</p>
-                      <pre className="bg-gray-100 p-2 rounded text-xs font-mono text-gray-700 overflow-x-auto">
+                      <p style={{ 
+                        fontSize: '13px', 
+                        color: 'rgba(255, 255, 255, 0.7)',
+                        marginBottom: '12px',
+                        lineHeight: '1.5'
+                      }}>
+                        {example.description}
+                      </p>
+                      <pre style={{
+                        background: 'rgba(0, 0, 0, 0.4)',
+                        padding: '12px 16px',
+                        borderRadius: '8px',
+                        fontSize: '12px',
+                        fontFamily: 'JetBrains Mono, monospace',
+                        color: 'rgba(255, 255, 255, 0.9)',
+                        overflowX: 'auto',
+                        border: '1px solid rgba(255, 255, 255, 0.1)',
+                        lineHeight: '1.6'
+                      }}>
                         {example.code}
                       </pre>
                     </div>

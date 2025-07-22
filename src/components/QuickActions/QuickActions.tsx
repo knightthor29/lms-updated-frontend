@@ -1,5 +1,5 @@
 import React from 'react';
-import { Play, FileText, Lightbulb, Zap, Code, BookOpen } from 'lucide-react';
+import { Play, FileText, Lightbulb, BookOpen, Zap, Sparkles } from 'lucide-react';
 
 interface QuickActionsProps {
   onNewFile: () => void;
@@ -18,54 +18,147 @@ const QuickActions: React.FC<QuickActionsProps> = ({
     {
       icon: FileText,
       label: 'New File',
-      description: 'Start with a blank canvas',
+      description: 'Start fresh',
       onClick: onNewFile,
-      color: 'bg-blue-500 hover:bg-blue-600'
+      gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
     },
     {
       icon: Lightbulb,
       label: 'Load Example',
-      description: 'Try a sample program',
+      description: 'Try samples',
       onClick: onLoadExample,
-      color: 'bg-yellow-500 hover:bg-yellow-600'
+      gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
     },
     {
       icon: Play,
-      label: 'Run Code',
-      description: 'Execute your program',
+      label: 'Execute',
+      description: 'Run code',
       onClick: onRunCode,
-      color: 'bg-green-500 hover:bg-green-600'
+      gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)'
     },
     {
       icon: BookOpen,
-      label: 'Documentation',
-      description: 'Learn KANG syntax',
+      label: 'Guide',
+      description: 'Learn syntax',
       onClick: onShowDocs,
-      color: 'bg-purple-500 hover:bg-purple-600'
+      gradient: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)'
     }
   ];
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6">
-      <div className="flex items-center space-x-2 mb-4">
-        <Zap size={20} className="text-purple-600" />
-        <h3 className="text-lg font-semibold text-gray-800">Quick Actions</h3>
+    <div className="glass-card slide-in-left" style={{ padding: '24px' }}>
+      <div style={{ 
+        display: 'flex', 
+        alignItems: 'center', 
+        gap: '12px', 
+        marginBottom: '20px' 
+      }}>
+        <div style={{
+          background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+          padding: '10px',
+          borderRadius: '12px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+          <Zap size={20} color="white" />
+        </div>
+        <div>
+          <h3 style={{ 
+            fontSize: '18px', 
+            fontWeight: '700',
+            color: 'white',
+            marginBottom: '2px'
+          }}>
+            Quick Actions
+          </h3>
+          <p style={{ 
+            fontSize: '13px', 
+            color: 'rgba(255, 255, 255, 0.6)'
+          }}>
+            Get started quickly
+          </p>
+        </div>
       </div>
       
-      <div className="grid grid-cols-2 gap-3">
+      <div style={{ 
+        display: 'grid', 
+        gridTemplateColumns: 'repeat(2, 1fr)', 
+        gap: '12px' 
+      }}>
         {actions.map((action, index) => {
           const Icon = action.icon;
           return (
             <button
               key={index}
               onClick={action.onClick}
-              className={`${action.color} text-white p-4 rounded-lg transition-all duration-200 hover:shadow-lg transform hover:-translate-y-1`}
+              className="hover-lift transform-gpu"
+              style={{
+                background: action.gradient,
+                border: 'none',
+                borderRadius: '16px',
+                padding: '20px 16px',
+                cursor: 'pointer',
+                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                position: 'relative',
+                overflow: 'hidden',
+                boxShadow: '0 8px 25px rgba(0, 0, 0, 0.15)'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-4px) scale(1.02)';
+                e.currentTarget.style.boxShadow = '0 15px 30px rgba(0, 0, 0, 0.25)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.15)';
+              }}
             >
-              <div className="flex flex-col items-center text-center space-y-2">
-                <Icon size={24} />
+              <div style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%)',
+                opacity: 0,
+                transition: 'opacity 0.3s ease'
+              }}></div>
+              
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                textAlign: 'center',
+                gap: '12px',
+                position: 'relative',
+                zIndex: 1
+              }}>
+                <div style={{
+                  background: 'rgba(255, 255, 255, 0.2)',
+                  padding: '12px',
+                  borderRadius: '12px',
+                  backdropFilter: 'blur(10px)'
+                }}>
+                  <Icon size={20} color="white" />
+                </div>
                 <div>
-                  <div className="font-medium text-sm">{action.label}</div>
-                  <div className="text-xs opacity-90">{action.description}</div>
+                  <div style={{
+                    fontWeight: '600',
+                    fontSize: '14px',
+                    color: 'white',
+                    marginBottom: '2px',
+                    textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)'
+                  }}>
+                    {action.label}
+                  </div>
+                  <div style={{
+                    fontSize: '11px',
+                    color: 'rgba(255, 255, 255, 0.9)',
+                    fontWeight: '500',
+                    textShadow: '0 1px 2px rgba(0, 0, 0, 0.3)'
+                  }}>
+                    {action.description}
+                  </div>
                 </div>
               </div>
             </button>
